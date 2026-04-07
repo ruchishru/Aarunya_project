@@ -1,0 +1,24 @@
+# BERT Model - too large for GitHub
+model/
+*.bin
+*.pt
+*.pth
+*.h5
+*.pkl
+*.safetensors
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Dataset (if large)
+dataset/
+
+# Environment
+.env
+venv/
+env/
+
+# Results/logs
+results/

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarunya – AI Health Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> 
+</head>
+<body>
+ 
+    <div class="bg-mesh"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+ 
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="brand-icon">
+                <i class="bi bi-heart-pulse-fill"></i>
+                <div class="brand-icon-ring"></div>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">Aarunya</span>
+                <span class="brand-sub">Doctor Recommendation</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <span class="nav-status">
+                <span class="status-dot"></span>
+                AI Online
+            </span>
+        </div>
+    </nav>
+ 
+    <!-- HERO -->
+    <section class="hero">
+ 
+        <!-- LEFT -->
+        <div class="hero-left">
+            <div class="hero-eyebrow">
+                <div class="eyebrow-line"></div>
+            </div>
+            <h1 class="hero-title">
+                Diagnose<br>
+                <em>Smarter.</em><br>
+                Heal Faster.
+            </h1>
+            <p class="hero-subtitle">
+                Enter your symptoms and Aarunya's trained AI instantly
+                identifies your condition and recommends the right specialist.
+            </p>
+ 
+            <!-- FORM CARD -->
+            <div class="form-card" id="formCard">
+                <div class="form-card-top">
+                    <div class="pulse-ring"><div class="pulse-dot"></div></div>
+                    <span class="form-card-label">Symptom Analyser</span>
+                    <span class="form-card-model">BERT v1</span>
+                </div>
+                <form action="/predict" method="post">
+                    <div class="input-group" id="inputGroup">
+                        <i class="bi bi-stethoscope input-ico"></i>
+                        <input
+                            type="text"
+                            name="symptoms"
+                            id="symptoms"
+                            placeholder="Describe symptoms e.g. fever, headache..."
+                            autocomplete="off"
+                            required
+                        >
+                        <button type="submit" class="submit-btn">
+                            <i class="bi bi-arrow-right-circle-fill"></i>
+                            <span>Analyse</span>
+                        </button>
+                    </div>
+                </form>
+                <div class="form-tags">
+                    <span class="ftag"><i class="bi bi-lightning-fill"></i> Instant</span>
+                    <span class="ftag"><i class="bi bi-shield-lock-fill"></i> Private</span>
+                    <span class="ftag"><i class="bi bi-person-check-fill"></i> Matched</span>
+                    <span class="ftag"><i class="bi bi-cpu-fill"></i> AI Powered</span>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- RIGHT — Specialist Grid -->
+        <div class="hero-right">
+            <div class="specialist-header">
+                <span>Our Specialists</span>
+                <div class="spec-line"></div>
+            </div>
+            <div class="specialist-grid">
+ 
+                <div class="spec-card sc-1">
+                    <div class="spec-icon"><i class="bi bi-capsule-pill"></i></div>
+                    <div class="spec-info">
+                        <p class="spec-name">Gastroenterology</p>
+                        <p class="spec-role">Gastroenterologist</p>
+                    </div>
+                    <div class="spec-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                </div>
+ 
+                <div class="spec-card sc-2">
+                    <div class="spec-icon"><i class="bi bi-gender-female"></i></div>
+                    <div class="spec-info">
+                        <p class="spec-name">Gynaecology</p>
+                        <p class="spec-role">Gynaecologist</p>
+                    </div>
+                    <div class="spec-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                </div>
+ 
+                <div class="spec-card sc-3">
+                    <div class="spec-icon"><i class="bi bi-bandaid-fill"></i></div>
+                    <div class="spec-info">
+                        <p class="spec-name">Dermatology</p>
+                        <p class="spec-role">Dermatologist</p>
+                    </div>
+                    <div class="spec-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                </div>
+ 
+                <div class="spec-card sc-4">
+                    <div class="spec-icon"><i class="bi bi-hospital-fill"></i></div>
+                    <div class="spec-info">
+                        <p class="spec-name">General Medicine</p>
+                        <p class="spec-role">General Physician</p>
+                    </div>
+                    <div class="spec-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                </div>
+ 
+                <div class="spec-card sc-5">
+                    <div class="spec-icon"><i class="bi bi-person-arms-up"></i></div>
+                    <div class="spec-info">
+                        <p class="spec-name">Orthopaedics</p>
+                        <p class="spec-role">Orthopedic</p>
+                    </div>
+                    <div class="spec-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                </div>
+ 
+                <div class="spec-card sc-6">
+                    <div class="spec-icon"><i class="bi bi-emoji-smile-fill"></i></div>
+                    <div class="spec-info">
+                        <p class="spec-name">Paediatrics</p>
+                        <p class="spec-role">Pediatrician</p>
+                    </div>
+                    <div class="spec-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                </div>
+ 
+                <div class="spec-card sc-7 spec-wide">
+                    <div class="spec-icon"><i class="bi bi-brain-fill"></i></div>
+                    <div class="spec-info">
+                        <p class="spec-name">Neurology</p>
+                        <p class="spec-role">Neurologist</p>
+                    </div>
+                    <div class="spec-arrow"><i class="bi bi-arrow-up-right"></i></div>
+                </div>
+ 
+            </div>
+        </div>
+ 
+    </section>
+ 
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+        <div class="bb-item">
+            <i class="bi bi-cpu-fill"></i>
+            <div>
+                <p class="bb-title">BERT AI Engine</p>
+                <p class="bb-sub">State-of-the-art medical NLP</p>
+            </div>
+        </div>
+        <!--
+        <div class="bb-divider"></div>
+        <div class="bb-item">
+            <i class="bi bi-diagram-3-fill"></i>
+            <div>
+                <p class="bb-title">Smart Routing</p>
+                <p class="bb-sub">Auto-detects special cases</p>
+            </div>
+        </div>
+        <div class="bb-divider"></div>
+        <div class="bb-item">
+            <i class="bi bi-calendar2-heart-fill"></i>
+            <div>
+                <p class="bb-title">Appointment Ready</p>
+                <p class="bb-sub">Book specialists instantly</p>
+            </div>
+        </div>
+        -->
+    </div>
+ 
+    <script>
+        window.addEventListener('load', () => {
+            document.getElementById('formCard').classList.add('visible');
+            document.querySelectorAll('.spec-card').forEach((c, i) => {
+                setTimeout(() => c.classList.add('visible'), 100 + i * 80);
+            });
+        });
+        const inp = document.getElementById('symptoms');
+        inp.addEventListener('focus', () => document.getElementById('inputGroup').classList.add('focused'));
+        inp.addEventListener('blur',  () => document.getElementById('inputGroup').classList.remove('focused'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarunya – Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+ 
+    <div class="bg-mesh"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+ 
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="brand-icon">
+                <i class="bi bi-heart-pulse-fill"></i>
+                <div class="brand-icon-ring"></div>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">Aarunya</span>
+                <span class="brand-sub">Health Intelligence</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="/" class="back-home">
+                <i class="bi bi-arrow-left"></i> Home
+            </a>
+        </div>
+    </nav>
+ 
+    <!-- RESULT SECTION -->
+    <section class="result-section">
+ 
+        <div class="result-top">
+            <div class="check-wrap">
+                <svg class="check-circle" viewBox="0 0 52 52">
+                    <circle class="check-circle-bg"     cx="26" cy="26" r="24"/>
+                    <circle class="check-circle-stroke" cx="26" cy="26" r="24"/>
+                    <path   class="check-tick"          d="M14 27l8 8 16-16"/>
+                </svg>
+            </div>
+            <h1 class="result-title">Analysis Complete</h1>
+            <p class="result-sub">Based on your symptoms, here is what our AI found</p>
+        </div>
+ 
+        <div class="result-grid">
+ 
+            <div class="res-card res-disease">
+                <div class="res-card-shine"></div>
+                <div class="res-card-icon">
+                    <i class="bi bi-clipboard2-pulse-fill"></i>
+                </div>
+                <p class="res-card-label">Predicted Condition</p>
+                <p class="res-card-value">{{ disease }}</p>
+                <div class="res-card-tag">
+                    <i class="bi bi-stars"></i> AI Diagnosis
+                </div>
+            </div>
+ 
+            <div class="res-card res-doctor">
+                <div class="res-card-shine"></div>
+                <div class="res-card-icon">
+                    <i class="bi bi-person-badge-fill"></i>
+                </div>
+                <p class="res-card-label">Recommended Specialist</p>
+                <p class="res-card-value">{{ doctor }}</p>
+                <div class="res-card-tag">
+                    <i class="bi bi-calendar2-check-fill"></i> Consult Now
+                </div>
+            </div>
+ 
+        </div>
+ 
+        <div class="disclaimer">
+            <i class="bi bi-info-circle-fill"></i>
+            <p>This is an AI-assisted suggestion only. Please consult a certified
+               medical professional for accurate diagnosis and treatment.</p>
+        </div>
+ 
+        <div class="result-btns">
+            <a href="/" class="rbtn rbtn-outline">
+                <i class="bi bi-arrow-left"></i>
+                Analyse Again
+            </a>
+            <!--
+            <a href="#" class="rbtn rbtn-fill">
+                <i class="bi bi-calendar2-plus-fill"></i>
+                Book Appointment
+            </a>
+            -->
+        </div>
+ 
+    </section>
+ 
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.check-circle-stroke').classList.add('draw');
+                document.querySelector('.check-tick').classList.add('draw');
+            }, 100);
+            document.querySelectorAll('.res-card').forEach((c, i) => {
+                setTimeout(() => c.classList.add('visible'), 400 + i * 180);
+            });
+            setTimeout(() => {
+                document.querySelector('.disclaimer').classList.add('visible');
+                document.querySelector('.result-btns').classList.add('visible');
+            }, 900);
+        });
+    </script>
+</body>
+</html>
