@@ -69,8 +69,8 @@ train_texts, val_texts, train_labels, val_labels = train_test_split(
 # -------------------------------
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
  
-train_encodings = tokenizer(train_texts, truncation=True, padding=True)
-val_encodings   = tokenizer(val_texts,   truncation=True, padding=True)
+train_encodings = tokenizer(train_texts, truncation=True, padding=True, return_transors="pt")
+val_encodings   = tokenizer(val_texts,   truncation=True, padding=True, return_transors="pt")
  
  
 # -------------------------------
