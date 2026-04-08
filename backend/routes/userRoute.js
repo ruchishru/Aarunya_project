@@ -1,8 +1,10 @@
 import express from 'express';
+import { analyzePrescription } from '../controllers/prescriptionController.js';
 import { loginUser, registerUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay, paymentStripe, verifyStripe } from '../controllers/userController.js';
 import upload from '../middleware/multer.js';
 import authUser from '../middleware/authUser.js';
 const userRouter = express.Router();
+userRouter.post('/analyze-prescription', upload.single('image'), analyzePrescription)
 
 userRouter.post("/register", registerUser)
 userRouter.post("/login", loginUser)
