@@ -8,7 +8,7 @@ export const analyzePrescription = async (req, res) => {
         const imageFile = req.file; // From Multer middleware
         if (!imageFile) return res.json({ success: false, message: "No image uploaded" });
 
-        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         // Convert image to base64 for Gemini
         const imageData = fs.readFileSync(imageFile.path).toString("base64");

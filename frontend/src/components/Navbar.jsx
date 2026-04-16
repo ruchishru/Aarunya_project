@@ -38,6 +38,9 @@ const Navbar = () => {
         <NavLink to='/helpdesk'>
           <li className='py-1'>🎫 Help Desk (Support)</li>
         </NavLink>
+        <NavLink to='/analyze-prescription'>
+          <li className='py-1'>PRESCRIPTION</li>
+        </NavLink>
       </ul>
 
       <div className='flex items-center gap-4'>

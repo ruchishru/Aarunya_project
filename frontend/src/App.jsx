@@ -4,7 +4,6 @@ import Footer from './components/Footer'
 import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
 import Home from './pages/Home'
 import Doctors from './pages/Doctors'
 import Login from './pages/Login'
@@ -17,6 +16,7 @@ import Verify from './pages/Verify'
 import HelpDesk from './pages/HelpDesk'
 import MyTickets from './pages/MyTickets'
 import Prescription from './pages/Prescription'
+import DietPlan from './pages/DietPlan'
 
 const App = () => {
   return (
@@ -38,6 +38,7 @@ const App = () => {
         <Route path='/helpdesk' element={<HelpDesk />} />
         <Route path='/symptom-checker' element={<div>Symptom Checker Coming Soon!</div>} />
         <Route path='/analyze-prescription' element={<Prescription />} />
+        <Route path='/diet-plan' element={<DietPlan />} />
         <Route path='/my-tickets' element={<MyTickets />} />
       </Routes>
 
