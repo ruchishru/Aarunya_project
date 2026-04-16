@@ -9,7 +9,7 @@ import torch
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 from transformers import BertTokenizer, BertForSequenceClassification
-from utils import get_doctor, detect_gynecology, detect_pediatric, detect_orthopedic, detect_neurology
+from utils import get_doctor, detect_gynecology, detect_pediatric, detect_orthopedic, detect_neurology, detect_generalphysician
 
 app = Flask(__name__)
 
@@ -104,6 +104,16 @@ def api_predict():
         return jsonify({
             "disease": "Possible Orthopedic Condition",
             "doctor":  "Orthopedic"
+        })
+    if detect_neurology(text):
+        return jsonify({
+            "disease": "Possible Neurological Condition",
+            "doctor":  "Neurologist"
+        })
+    if detect_generalphysician(text):
+        return jsonify({
+            "disease": "Possible General Health Issue",
+            "doctor":  "General Physician"
         })
 
     inputs = tokenizer(text, return_tensors="pt", truncation=True,

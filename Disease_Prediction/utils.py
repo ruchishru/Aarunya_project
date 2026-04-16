@@ -121,7 +121,7 @@ def detect_pediatric(text):
 def detect_orthopedic(text):
 
     keywords = [
-        "ankle sprain", "fracture", "sprain"
+        "ankle sprain", "fracture", "sprain", "bone"
     ]
 
     text_lower = text.lower()
@@ -136,7 +136,21 @@ def detect_orthopedic(text):
 def detect_neurology(text):
 
     keywords = [
-        "stroke", "epilepsy"
+        "stroke", "epilepsy", "stroke", "severe headache"
+    ]
+
+    text_lower = text.lower()
+    for word in keywords:
+        if word in text_lower:
+            return True
+
+    return False
+
+# Function 6: GENERAL HEALTH ISSUE
+def detect_generalphysician(text):
+
+    keywords = [
+        "bleeding", "back pain", "headache", "fever"
     ]
 
     text_lower = text.lower()
