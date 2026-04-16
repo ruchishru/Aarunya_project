@@ -6,65 +6,38 @@ import connectCloudinary from "./config/cloudinary.js"
 import userRouter from "./routes/userRoute.js"
 import doctorRouter from "./routes/doctorRoute.js"
 import adminRouter from "./routes/adminRoute.js"
-// import doctorModel from "./models/doctorModel.js"
 
 // app config
 const app = express()
 const port = process.env.PORT || 4000
+
+// Connect to Databases
 connectDB()
 connectCloudinary()
-
 
 // middlewares
 app.use(express.json())
 app.use(cors())
 
-// const symptomMap = {
-//   cardiologist: ["chest pain", "heart", "bp", "palpitation"],
-//   dermatologist: ["skin", "rash", "acne", "itching"],
-//   ent: ["throat", "ear", "nose", "sinus"],
-//   orthopedist: ["bone", "joint", "knee", "back pain"],
-//   neurologist: ["headache", "migraine", "dizziness"],
-//   gynecologist: ["pregnancy", "period", "menstrual"],
-//   pediatrician: ["child", "baby", "infant"]
-// };
-
-// function detectSpecialty(text) {
-//   text = text.toLowerCase();
-//   for (let spec in symptomMap) {
-//     for (let word of symptomMap[spec]) {
-//       if (text.includes(word)) return spec;
-//     }
-//   }
-//   return "general";
-// }
-
-// app.post("/api/find-doctor", async (req, res) => {
-//   try {
-//     const { symptoms } = req.body;
-//     const specialty = detectSpecialty(symptoms);
-
-//     // Example: using your doctor model (adjust field names)
-//     const doctors = await doctorModel.find({ specialty });
-
-//     res.json({
-//       success: true,
-//       specialty,
-//       doctors
-//     });
-//   } catch (err) {
-//     res.status(500).json({ success: false, message: err.message });
-//   }
-// });
-
-
-// api endpoints
+// API endpoints
+// Ensure these are defined BEFORE any static file serving (if you add any later)
 app.use("/api/user", userRouter)
 app.use("/api/admin", adminRouter)
 app.use("/api/doctor", doctorRouter)
 
 app.get("/", (req, res) => {
   res.send("API Working")
+});
+
+// --- DEBUGGING TOOL ---
+// If a request hits a route that doesn't exist, this will log it 
+// instead of sending HTML, helping you find the "undefined" or path error.
+app.use((req, res) => {
+  console.log(`404 - Not Found: ${req.method} ${req.originalUrl}`);
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found on this server.`
+  });
 });
 
 app.listen(port, () => console.log(`Server started on PORT:${port}`))

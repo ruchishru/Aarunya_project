@@ -36,7 +36,7 @@ const appointmentsDoctor = async (req, res) => {
     try {
 
         const { docId } = req.body
-        const appointments = await appointmentModel.find({ docId })
+        const appointments = await appointmentModel.find({ docId }).populate('userId', 'name email');
 
         res.json({ success: true, appointments })
 
@@ -152,13 +152,15 @@ const updateDoctorProfile = async (req, res) => {
 // API to get dashboard data for doctor panel
 const doctorDashboard = async (req, res) => {
     try {
-
         const { docId } = req.body
 
+        // Added .populate('userId', 'name email') so latest appointments 
+        // show patient details side-by-side
         const appointments = await appointmentModel.find({ docId })
+            .populate('userId', 'name email')
+            .sort({ date: -1 });
 
         let earnings = 0
-
         appointments.map((item) => {
             if (item.isCompleted || item.payment) {
                 earnings += item.amount
@@ -166,10 +168,11 @@ const doctorDashboard = async (req, res) => {
         })
 
         let patients = []
-
         appointments.map((item) => {
-            if (!patients.includes(item.userId)) {
-                patients.push(item.userId)
+            // Check item.userId._id because it is now a populated object
+            const patientId = item.userId?._id || item.userId;
+            if (!patients.includes(patientId)) {
+                patients.push(patientId)
             }
         })
 
@@ -179,7 +182,7 @@ const doctorDashboard = async (req, res) => {
             earnings,
             appointments: appointments.length,
             patients: patients.length,
-            latestAppointments: appointments.reverse()
+            latestAppointments: appointments.slice(0, 5) // Returns top 5 latest
         }
 
         res.json({ success: true, dashData })

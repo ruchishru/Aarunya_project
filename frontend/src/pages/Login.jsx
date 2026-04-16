@@ -63,9 +63,16 @@ const Login = () => {
           : null
         }
         <div className='w-full '>
-          <p>Email</p>
-          <input onChange={(e) => setEmail(e.target.value)} value={email} className='border border-[#DADADA] rounded w-full p-2 mt-1' type="email" required />
-        </div>
+  <p>Email</p>
+  <input 
+    onChange={(e) => setEmail(e.target.value)} 
+    value={email} 
+    autoComplete="off" // Add this
+    className='border border-[#DADADA] rounded w-full p-2 mt-1' 
+    type="email" 
+    required 
+  />
+</div>
         <div className='w-full '>
           <p>Password</p>
           <input onChange={(e) => setPassword(e.target.value)} value={password} className='border border-[#DADADA] rounded w-full p-2 mt-1' type="password" required />
