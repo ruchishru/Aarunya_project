@@ -61,8 +61,11 @@ const Navbar = () => {
           </div>
         ) : (
           <button
+            type="button"
             onClick={() => {
               window.scrollTo(0, 0)
+              localStorage.removeItem('token') 
+              setToken(false)                
               navigate('/login')
             }}
             className='bg-primary text-white px-8 py-3 rounded-full font-light block cursor-pointer relative z-[10000] hover:scale-105 transition-all'
