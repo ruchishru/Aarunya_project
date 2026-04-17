@@ -111,7 +111,7 @@ const Home = () => {
             nutrition roadmap designed specifically for your body.
           </p>
           <button
-            onClick={() => navigate('/diet-recommendation')}
+            onClick={() => navigate('/diet-plan')}
             style={{
               background: 'linear-gradient(135deg,#10b981,#059669)',
               color: '#fff', border: 'none',

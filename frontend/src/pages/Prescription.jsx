@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { AppContext } from '../context/AppContext';
 
 const Prescription = () => {
+    const { backendUrl, token } = useContext(AppContext);
+
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
-    const [result, setResult] = useState("");
+    const [result, setResult] = useState('');
     const [loading, setLoading] = useState(false);
     const [dragActive, setDragActive] = useState(false);
 
     const handleFileChange = (file) => {
-        if (file) {
-            setImage(file);
-            setPreview(URL.createObjectURL(file));
-        }
+        if (!file) return;
+
+        setImage(file);
+        setPreview(URL.createObjectURL(file));
+        setResult('');
     };
 
     const handleDrop = (e) => {
@@ -23,33 +28,50 @@ const Prescription = () => {
     };
 
     const handleAnalyze = async () => {
-        if (!image) return;
+        if (!image) {
+            toast.error('Please upload a prescription image first.');
+            return;
+        }
+
+        if (!token) {
+            toast.error('Please login first.');
+            return;
+        }
 
         setLoading(true);
-        const formData = new FormData();
-        formData.append('image', image);
+        setResult('');
 
         try {
+            const formData = new FormData();
+            formData.append('image', image);
+
             const { data } = await axios.post(
-                'http://localhost:4000/api/user/analyze-prescription',
-                formData
+                `${backendUrl}/api/user/analyze-prescription`,
+                formData,
+                {
+                    headers: {
+                        token,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
             );
 
             if (data.success) {
-                setResult(data.analysis);
+                setResult(data.analysis || data.result || 'Analysis completed, but no result was returned.');
+            } else {
+                toast.error(data.message || 'Analysis failed.');
             }
         } catch (error) {
-            console.error("Analysis failed", error);
+            console.error('Analysis failed:', error);
+            toast.error(error.response?.data?.message || error.message || 'Analysis failed.');
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 p-6 md:p-12">
             <div className="max-w-5xl mx-auto">
-
-                {/* Header */}
                 <div className="mb-10 text-center">
                     <h1 className="text-4xl font-extrabold text-gray-800">
                         Prescription <span className="text-indigo-600">AI Analyzer</span>
@@ -60,10 +82,7 @@ const Prescription = () => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-10">
-
-                    {/* Upload Card */}
                     <div className="backdrop-blur-lg bg-white/70 p-6 rounded-3xl shadow-xl border border-white/40">
-
                         <div
                             onDragOver={(e) => {
                                 e.preventDefault();
@@ -76,6 +95,7 @@ const Prescription = () => {
                         >
                             <input
                                 type="file"
+                                accept="image/*"
                                 onChange={(e) => handleFileChange(e.target.files[0])}
                                 className="absolute inset-0 opacity-0 cursor-pointer"
                             />
@@ -88,10 +108,11 @@ const Prescription = () => {
                                         className="w-full h-52 object-contain rounded-xl mb-4"
                                     />
                                     <button
+                                        type="button"
                                         onClick={() => {
                                             setImage(null);
                                             setPreview(null);
-                                            setResult("");
+                                            setResult('');
                                         }}
                                         className="text-sm text-red-500 hover:underline"
                                     >
@@ -113,7 +134,6 @@ const Prescription = () => {
                             )}
                         </div>
 
-                        {/* Analyze Button */}
                         <button
                             onClick={handleAnalyze}
                             disabled={!image || loading}
@@ -128,18 +148,16 @@ const Prescription = () => {
                                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                     Analyzing...
                                 </>
-                            ) : "Analyze Prescription"}
+                            ) : (
+                                'Analyze Prescription'
+                            )}
                         </button>
                     </div>
 
-                    {/* Results Card */}
                     <div className="backdrop-blur-lg bg-white/70 p-6 rounded-3xl shadow-xl border border-white/40 flex flex-col">
-
                         <div className="flex items-center gap-2 mb-4 border-b pb-3">
                             <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
-                            <h2 className="font-semibold text-gray-700">
-                                AI Insights
-                            </h2>
+                            <h2 className="font-semibold text-gray-700">AI Insights</h2>
                         </div>
 
                         {!result && !loading && (
@@ -162,7 +180,6 @@ const Prescription = () => {
                                     {result}
                                 </p>
 
-                                {/* Disclaimer */}
                                 <div className="mt-6 bg-yellow-100 p-4 rounded-xl text-xs text-yellow-800 flex gap-2 shadow-sm">
                                     ⚠️ This AI-generated summary is for informational purposes only.
                                     Always consult a doctor.
@@ -170,7 +187,6 @@ const Prescription = () => {
                             </div>
                         )}
                     </div>
-
                 </div>
             </div>
         </div>
